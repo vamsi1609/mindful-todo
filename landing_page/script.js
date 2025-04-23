@@ -53,7 +53,7 @@ signupForm.addEventListener('submit', async (event) => {
 
         if (response.ok) {
             // Redirect to the congratulations page
-            window.location.href = '/congratulations.html';
+            window.location.href = './congratulations.html';
         } else {
             const result = await response.json();
             console.error('Error response from server:', result.message); // Log the error

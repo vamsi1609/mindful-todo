@@ -1,0 +1,375 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #000;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* General Theme */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f5f5f5; /* Light gray background */
+    color: #000; /* Black text */
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+h1, .popup h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #000; /* Black headings */
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 90%;
+    max-width: 400px;
+}
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+    transition: width 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.container.sidebar-collapsed .sidebar {
+    width: 80px; /* Reduced width for collapsed state */
+}
+
+/* Sidebar Menu */
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    margin: 15px 0;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #000;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+.menu-item:hover {
+    background-color: #f0f0f0;
+}
+
+.menu-item i {
+    font-size: 1.5rem;
+    color: #000;
+}
+
+.container.sidebar-collapsed .menu-item {
+    justify-content: center; /* Center the icons */
+    padding: 10px; /* Adjust padding for collapsed state */
+}
+
+.container.sidebar-collapsed .menu-item span {
+    display: none; /* Hide text when sidebar is collapsed */
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.profile-email {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.container.sidebar-collapsed .profile-info {
+    display: none; /* Hide profile text when collapsed */
+}
+
+.add-task-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.add-task-button:hover {
+    background-color: #333;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #000; /* Black text */
+    font-size: 1rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container.sidebar-collapsed .sidebar a {
+    justify-content: center; /* Center the icons */
+    gap: 0; /* Remove space between icon and text */
+}
+
+.container.sidebar-collapsed .sidebar a span {
+    display: none; /* Hide the text */
+}
+
+/* Icon Styling */
+.sidebar a i {
+    font-size: 1.2rem;
+    color: #000; /* Black icons */
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #5f6e60;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+    background-color: #e8f5e9;
+    color: #4CAF50;
+}
+
+/* Main Content */
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+section {
+    display: none;
+}
+
+section.active {
+    display: block;
+}
+
+/* Task List */
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.task-list {
+    margin-top: 20px;
+}
+
+.task-item {
+    background-color: #ffffff;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.task-item {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-item strong {
+    font-size: 1.2rem;
+    color: #4CAF50;
+}
+
+.popup h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #4CAF50;
+}
+
+.popup button {
+    margin-right: 10px;
+}
+
+/* Toggle Sidebar Button */
+.toggle-sidebar {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    align-self: center; /* Center the button horizontally */
+    margin: 10px 0;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-sidebar:hover {
+    background-color: #333;
+}
+
+.toggle-sidebar {
+    position: absolute;
+    top: 20px;
+    left: 250px; /* Align with the sidebar */
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    z-index: 1000;
+    transition: background-color 0.3s ease, transform 0.3s ease, left 0.3s ease;
+}
+
+.toggle-sidebar:hover {
+    background-color: #333; /* Darker black on hover */
+}
+
+.container.sidebar-collapsed .toggle-sidebar {
+    left: 80px; /* Adjust position to align with collapsed sidebar */
+}
+
+.container.sidebar-collapsed .sidebar {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+.container.sidebar-collapsed .content {
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}

@@ -9,50 +9,52 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <nav class="sidebar">
-            <div class="logo">
-                <img src="logo.png" alt="Logo" class="logo-img">
-            </div>
-            <ul class="menu">
-                <li><a href="#" id="dashboardTab" class="menu-item"><i class="fas fa-th-large"></i> <span>Dashboard</span></a></li>
-                <li><a href="#" id="tasksTab" class="menu-item"><i class="fas fa-tasks"></i> <span>Tasks</span></a></li>
-            </ul>
-            <button id="toggleSidebarButton" class="toggle-sidebar"><i class="fas fa-angle-left"></i></button>
-            <div class="profile">
-                <img src="profile.png" alt="Profile Picture" class="profile-pic">
-                <div class="profile-info">
-                    <span class="profile-name">John Doe</span>
-                    <span class="profile-email">john.doe@example.com</span>
+    <div class="page-container">
+        <div class="container">
+            <nav class="sidebar">
+                <div class="logo">
+                    <img src="logo.png" alt="Logo" class="logo-img">
                 </div>
-            </div>
-        </nav>
-        <main class="content">
-            <section id="dashboardSection" class="active">
-                <h1>Dashboard</h1>
-                <div id="dashboardList" class="task-list"></div>
-            </section>
-            <section id="tasksSection">
-                <h1>Tasks</h1>
-                <button id="addTaskButton">Add Task</button>
-                <div class="popup-overlay" id="popupOverlay"></div>
-                <div class="popup" id="popupForm">
-                    <h2>Add Task</h2>
-                    <form id="taskForm">
-                        <label for="taskName">Task Name:</label>
-                        <input type="text" id="taskName" name="taskName" required>
-                        <label for="dueDate">Due Date:</label>
-                        <input type="date" id="dueDate" name="dueDate" required>
-                        <label for="notes">Notes:</label>
-                        <textarea id="notes" name="notes" rows="4"></textarea>
-                        <button type="submit">Add</button>
-                        <button type="button" id="cancelButton">Cancel</button>
-                    </form>
+                <ul class="menu">
+                    <li><a href="#" id="dashboardTab" class="menu-item"><i class="fas fa-th-large"></i> <span>Dashboard</span></a></li>
+                    <li><a href="#" id="tasksTab" class="menu-item"><i class="fas fa-tasks"></i> <span>Tasks</span></a></li>
+                </ul>
+                <div class="profile">
+                    <img src="profile.png" alt="Profile Picture" class="profile-pic">
+                    <div class="profile-info">
+                        <span class="profile-name">John Doe</span>
+                        <span class="profile-email">john.doe@example.com</span>
+                    </div>
                 </div>
-            </section>
-        </main>
+            </nav>
+            <main class="content">
+                <section id="dashboardSection" class="active">
+                    <h1>Dashboard</h1>
+                    <div id="dashboardList" class="task-list"></div>
+                </section>
+                <section id="tasksSection">
+                    <h1>Tasks</h1>
+                    <button id="addTaskButton" class="floating-button">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="popup-overlay" id="popupOverlay"></div>
+                    <div class="popup" id="popupForm">
+                        <h2>Add Task</h2>
+                        <form id="taskForm">
+                            <label for="taskName">Task Name:</label>
+                            <input type="text" id="taskName" name="taskName" required>
+                            <label for="dueDate">Due Date:</label>
+                            <input type="date" id="dueDate" name="dueDate" required>
+                            <label for="notes">Notes:</label>
+                            <textarea id="notes" name="notes" rows="4"></textarea>
+                            <button type="submit">Add</button>
+                            <button type="button" id="cancelButton">Cancel</button>
+                        </form>
+                    </div>
+                </section>
+            </main>
+        </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

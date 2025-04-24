@@ -1,8 +1,20 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [0.0.2.20250424]
 
-## [Unreleased]
+### Added
+- **Task Checkbox**: Added a round checkbox with a depth effect next to each task name on the dashboard.
+- **Task Details Toggle**: Implemented functionality to display only the task name initially. Clicking on the task name reveals additional details (due date and notes).
+- **Popup Form Animation**: Added smooth fade-in and scale-up animations for the "Add Task" popup form.
+- **Dynamic Task Rendering**: Tasks are now dynamically rendered on the dashboard from a simulated JSON-like structure.
+
+### Changed
+- **"Add Task" Button**: Positioned the floating "Add Task" button at the center bottom of the page for better visibility.
+- **Popup Form Design**: Updated the "Add Task" form with a modern gray color scheme, rounded corners, and subtle shadows.
+
+
+## [0.0.1.20250423]
 
 ### Added
 - **Sidebar Toggle Button**: Added a button inside the sidebar to toggle its visibility. The button dynamically updates its icon (`<` or `>`) based on the sidebar state.

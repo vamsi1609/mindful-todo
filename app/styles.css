@@ -473,7 +473,7 @@ section.active {
 .floating-button {
     position: fixed;
     bottom: 20px; /* Distance from the bottom of the page */
-    left: 50%; /* Center horizontally */
+    left: 55%; /* Center horizontally */
     transform: translateX(-50%); /* Adjust position to truly center */
     width: 60px;
     height: 60px;

@@ -528,3 +528,71 @@ section.active {
     border-color: #4CAF50; /* Match border color */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow */
 }
+
+/* General task list styles */
+.task-list {
+    margin: 20px 0;
+    padding: 0;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Task label (colored dot) */
+.task-label {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.task-label.personal {
+    background-color: #ff6b6b; /* Red */
+}
+
+.task-label.freelance {
+    background-color: #feca57; /* Yellow */
+}
+
+.task-label.work {
+    background-color: #1dd1a1; /* Green */
+}
+
+/* Task content */
+.task-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.task-time {
+    font-size: 14px;
+    color: #888;
+}
+
+/* Task checkbox */
+.task-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}

@@ -1,6 +1,20 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## [0.0.3.20250425]
+
+### Changed
+- **Tasks content**: placed all the tasks in task tab
+- **Tasks List**: updated the design for the tasks
+
+### Removed
+- **Dashboard Content**: Removed all content from the dashboard, leaving only the title "Dashboard."
+- **Graph Rendering**: Removed the graph rendering logic and the `<canvas>` element from the dashboard section.
+
+
+---
+
 ## [0.0.2.20250424]
 
 ### Added
@@ -13,6 +27,7 @@ All notable changes to this project will be documented in this file.
 - **"Add Task" Button**: Positioned the floating "Add Task" button at the center bottom of the page for better visibility.
 - **Popup Form Design**: Updated the "Add Task" form with a modern gray color scheme, rounded corners, and subtle shadows.
 
+---
 
 ## [0.0.1.20250423]
 

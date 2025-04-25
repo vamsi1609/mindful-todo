@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.4.20250425]
+
+### Added
+- **Dashboard Default View**: Set the dashboard as the default view when the application loads.
+- **Line Graph**: Updated the dashboard to display a line graph with happiness scores for completed tasks grouped by days of the week.
+- **Week Range in Chart Title**: Added the start and end dates of the week (Monday to Sunday) to the top-right corner of the chart.
+
+### Changed
+- **Graph Type**: Switched the dashboard graph from a bar chart to a line chart for better visualization of trends.
+- **X-Axis Labels**: Updated the x-axis of the dashboard graph to display days of the week (Monday to Sunday).
+- **Sidebar Navigation**: Removed redundant tab navigation and ensured the sidebar handles navigation between "Dashboard" and "Tasks" sections.
+
+### Fixed
+- **Chart Rendering on Refresh**: Resolved the issue where the dashboard chart was not loading when the page was refreshed.
+- **Unnecessary Text**: Removed duplicate "Dashboard" and "Tasks" text from the page.
+
+---
+
 ## [0.0.3.20250425]
 
 ### Changed

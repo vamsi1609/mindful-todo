@@ -13,6 +13,16 @@ const addTaskButton = document.getElementById('addTaskButton');
 const existingTasksContainer = document.getElementById('existingTasks');
 const completedTasksContainer = document.getElementById('completedTasks');
 
+// Declare happinessScoreSlider and happinessScoreValue at the top
+const happinessScoreSlider = document.getElementById('happinessScore');
+const happinessScoreValue = document.getElementById('happinessScoreValue');
+
+console.log(addTaskButton);
+console.log(popup);
+console.log(overlay);
+console.log(taskForm);
+console.log(cancelButton);
+
 // Simulated JSON data for tasks
 let tasks = [
     {
@@ -52,17 +62,85 @@ tasksTab.addEventListener('click', () => {
 
 // Function to render tasks on the dashboard
 function renderDashboard() {
-    // Clear the dashboard content
-    const ctx = document.getElementById('happinessGraph');
-    if (ctx) {
-        ctx.remove(); // Remove the canvas element if it exists
+    const ctx = document.getElementById('dashboardChart').getContext('2d');
+
+    // Get the current date and calculate the start and end of the week
+    const today = new Date();
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay() + 1); // Monday
+    const endOfWeek = new Date(today);
+    endOfWeek.setDate(today.getDate() - today.getDay() + 7); // Sunday
+
+    // Format the start and end dates
+    const options = { month: 'short', day: 'numeric' };
+    const startOfWeekFormatted = startOfWeek.toLocaleDateString(undefined, options);
+    const endOfWeekFormatted = endOfWeek.toLocaleDateString(undefined, options);
+
+    // Days of the week for the x-axis
+    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+    // Filter completed tasks and group them by day of the week
+    const completedTasks = tasks.filter(task => task.completed);
+    const happinessScoresByDay = Array(7).fill(0); // Initialize scores for each day
+
+    completedTasks.forEach(task => {
+        const taskDate = new Date(task.dueDate);
+        const dayIndex = (taskDate.getDay() + 6) % 7; // Adjust to make Monday = 0, Sunday = 6
+        happinessScoresByDay[dayIndex] += task.happinessScore;
+    });
+
+    // Chart data
+    const data = {
+        labels: daysOfWeek,
+        datasets: [{
+            label: 'Happiness Score',
+            data: happinessScoresByDay,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderWidth: 2,
+            tension: 0.4 // Smooth curve for the line
+        }]
+    };
+
+    // Chart configuration
+    const config = {
+        type: 'line', // Change to 'line' for a line graph
+        data: data,
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: `Week: ${startOfWeekFormatted} - ${endOfWeekFormatted}`,
+                    align: 'end', // Align the title to the top-right
+                    position: 'top',
+                    font: {
+                        size: 14
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    // Clear the existing chart if it exists
+    if (window.dashboardChart) {
+        if (typeof window.dashboardChart.destroy === 'function') {
+            window.dashboardChart.destroy();
+        }
     }
+
+    // Render the chart
+    window.dashboardChart = new Chart(ctx, config);
 }
 
 // Function to render tasks in the "Tasks" tab
 function renderTasks() {
     // Clear the current lists
-    existingTasksContainer.innerHTML = '<h2>Tasks</h2>';
+    existingTasksContainer.innerHTML = '<h2></h2>';
     completedTasksContainer.innerHTML = '<h2>Completed Tasks</h2>';
 
     // Check if there are tasks
@@ -114,6 +192,7 @@ function renderTasks() {
         taskName.addEventListener('click', (e) => {
             e.stopPropagation(); // Prevent triggering other click events
             if (!task.completed) {
+                console.log('Edit Task Clicked'); // Debugging log
                 showEditPopup(task); // Open the edit popup for the task
             }
         });
@@ -196,15 +275,17 @@ completedTasksHeader.addEventListener('click', () => {
 
 // Show the popup for creating a new task
 addTaskButton.addEventListener('click', () => {
-    // Update the popup title to "Add Task"
-    document.querySelector('#popupForm h2').textContent = 'Add Task';
+    console.log('Add Task Button Clicked'); // Debugging log
+
+    // Update the popup title to "Create Task"
+    document.querySelector('#popupForm h2').textContent = 'Create Task';
 
     // Clear the form
     taskForm.reset();
     happinessScoreSlider.value = 5; // Reset slider to default value
     happinessScoreValue.textContent = 5; // Reset displayed value
 
-    // Reset the form submission to create a new task
+    // Set up the form submission for creating a new task
     taskForm.onsubmit = (e) => {
         e.preventDefault();
 
@@ -212,15 +293,15 @@ addTaskButton.addEventListener('click', () => {
         const taskName = document.getElementById('taskName').value;
         const dueDate = document.getElementById('dueDate').value;
         const notes = document.getElementById('notes').value;
-        const happinessScore = happinessScoreSlider.value;
+        const happinessScore = parseInt(happinessScoreSlider.value, 10);
 
         // Create a new task object
         const newTask = {
-            id: tasks.length + 1,
+            id: tasks.length + 1, // Generate a new ID
             name: taskName,
             dueDate: dueDate,
             notes: notes,
-            happinessScore: parseInt(happinessScore, 10), // Convert to number
+            happinessScore: happinessScore,
             completed: false
         };
 
@@ -230,6 +311,9 @@ addTaskButton.addEventListener('click', () => {
         // Close the popup
         popup.classList.remove('active');
         overlay.classList.remove('active');
+
+        // Clear the form
+        taskForm.reset();
 
         // Re-render the tasks
         renderTasks();
@@ -268,13 +352,147 @@ toggleSidebarButton.addEventListener('click', () => {
 });
 
 // Update the displayed value of the happiness score slider
-const happinessScoreSlider = document.getElementById('happinessScore');
-const happinessScoreValue = document.getElementById('happinessScoreValue');
-
-// Update the displayed value when the slider is moved
 happinessScoreSlider.addEventListener('input', () => {
-    happinessScoreValue.textContent = happinessScoreSlider.value;
+    const sliderValue = happinessScoreSlider.value;
+    happinessScoreValue.textContent = sliderValue;
+
+    // Calculate the position of the score dynamically
+    const sliderWidth = happinessScoreSlider.offsetWidth;
+    const thumbWidth = 20; // Width of the slider thumb
+    const min = parseInt(happinessScoreSlider.min, 10);
+    const max = parseInt(happinessScoreSlider.max, 10);
+    const percentage = ((sliderValue - min) / (max - min)) * 100;
+
+    // Adjust the position of the score
+    const offset = (percentage / 100) * (sliderWidth - thumbWidth);
+    happinessScoreValue.style.left = `calc(${percentage}% - ${offset}px)`;
+});
+
+happinessScoreSlider.addEventListener('input', () => {
+    // Update the value attribute dynamically
+    happinessScoreSlider.setAttribute('value', happinessScoreSlider.value);
 });
 
 // Initial render of tasks in the "Tasks" tab
 renderTasks();
+
+document.addEventListener('DOMContentLoaded', () => {
+    addTaskButton.addEventListener('click', () => {
+        console.log('Add Task Button Clicked'); // Debugging log
+        // Update the popup title to "Create Task"
+        document.querySelector('#popupForm h2').textContent = 'Create Task';
+
+        // Clear the form
+        taskForm.reset();
+        happinessScoreSlider.value = 5; // Reset slider to default value
+        happinessScoreValue.textContent = 5; // Reset displayed value
+
+        // Show the popup
+        popup.classList.add('active');
+        overlay.classList.add('active');
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const happinessScoreSlider = document.getElementById('happinessScore');
+    const happinessScoreValue = document.getElementById('happinessScoreValue');
+
+    happinessScoreSlider.addEventListener('input', () => {
+        const sliderValue = happinessScoreSlider.value;
+        happinessScoreValue.textContent = sliderValue;
+
+        // Calculate the position of the score dynamically
+        const sliderWidth = happinessScoreSlider.offsetWidth;
+        const thumbWidth = 20; // Width of the slider thumb
+        const min = parseInt(happinessScoreSlider.min, 10);
+        const max = parseInt(happinessScoreSlider.max, 10);
+        const percentage = ((sliderValue - min) / (max - min)) * 100;
+
+        // Adjust the position of the score
+        const offset = (percentage / 100) * (sliderWidth - thumbWidth);
+        happinessScoreValue.style.left = `calc(${percentage}% - ${offset}px)`;
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const happinessScoreSlider = document.getElementById('happinessScore');
+    const happinessScoreValue = document.getElementById('happinessScoreValue');
+
+    console.log(happinessScoreSlider); // Should not be null
+    console.log(happinessScoreValue); // Should not be null
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const ctx = document.getElementById('dashboardChart').getContext('2d');
+
+    // Example data for the chart
+    const data = {
+        labels: ['Task 1', 'Task 2', 'Task 3', 'Task 4', 'Task 5'],
+        datasets: [{
+            label: 'Happiness Score',
+            data: [7, 5, 8, 6, 9], // Example scores
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // Chart configuration
+    const config = {
+        type: 'bar', // Change to 'line', 'pie', etc., for different chart types
+        data: data,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    // Render the chart
+    new Chart(ctx, config);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cancelButton = document.getElementById('cancelButton');
+    if (cancelButton) {
+        cancelButton.addEventListener('click', () => {
+            popup.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    } else {
+        console.error('Cancel button not found in the DOM.');
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cancelButton = document.getElementById('cancelButton');
+    console.log(cancelButton); // Should not be null
+});
+
+console.log(document.getElementById('dashboardChart'));
+
+// Ensure the dashboard is rendered on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Set the dashboard as the default active tab
+    dashboardTab.classList.add('active');
+    tasksTab.classList.remove('active');
+    dashboardSection.classList.add('active');
+    tasksSection.classList.remove('active');
+
+    // Render the dashboard graph
+    renderDashboard();
+});
